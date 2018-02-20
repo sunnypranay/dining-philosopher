@@ -1,0 +1,244 @@
+#include<iostream>
+using namespace std;
+void ini (int semaphore[],int philo[],char state[])
+{
+for(int i=0;i<5;i++)
+{
+semaphore[i]=0;
+philo[i]=i;
+state[i]='T';
+}
+}
+void hungry(int n,int semaphore[],int philo[],char state[])
+{
+int left,right;
+if(semaphore[n]!=1)
+{
+state[n]='H';
+left=((n-1)%5);
+right=((n+1)%5);
+if (state[n]=='H')
+{
+if (state[left]!='E'&& state[right]!='E')
+{
+state[n]='E';
+semaphore[n]++;
+}
+}
+}
+else
+{
+cout<<"--Stop feeding him!!!!!!--"<<"  He is already in a Eating state "<<endl;
+}
+}
+void thinking(int n,int semaphore[],int philo[],char state[])
+{
+
+int left,right;
+if (state[n]=='T')
+{
+cout<<endl<<endl<<"He is already in a thinking state\n\n";
+}
+else if(state[n]=='H')
+{
+state[n]='T';
+cout<<endl<<endl<<"philospher was intially in a hungry state we moved him to thinking state\n\n";
+}
+else
+{
+state[n]='T';
+semaphore[n]--;
+cout<<endl<<endl<<"philospher was intially in a eating  state we moved him to thinking state\n\n\n";
+left=((n-1)%5);
+right=((n+1)%5);
+if (state[left]=='H'&&state[right]!='H')
+{
+cout<<endl<<endl<<"Philospher of position "<<left<<" he was in hungry state so we have moved him in to Eating state\n\n\n";
+ hungry(left,semaphore,philo,state);
+}
+else if(state[left]!='H'&&state[right]=='H')
+{
+cout<<endl<<endl<<"Philospher of position "<<right<<" he was in hungry state so we have moved him in to Eating state\n\n\n";
+
+ hungry(right,semaphore,philo,state);
+}
+else if(state[left]=='H'&&state[right]=='H')
+{
+cout<<endl<<endl<<"Philospher of position "<<left<<"&&"<<right<<" they were in a hungry state so we have moved them in to Eating state\n\n\n";
+
+ hungry(left,semaphore,philo,state);
+ hungry(right,semaphore,philo,state);
+
+}
+}
+}
+void status(int semaphore[],int philo[],char state[])
+{
+for(int i=0;i<5;i++)
+{
+cout<<"philosopher postion "<<i<<"\t"<<"Sempaphore of philosopher: "<<semaphore[i]<<"\t"<<"State of philospher "<<state[i]<<endl;
+}
+}
+main()
+{
+char state[5];
+int philo[5],semaphore[5];
+ini(semaphore,philo,state);
+int n,ch;
+while(true)
+{
+cout<<"-----------------------Menu----------------------------"<<endl;
+cout<<"1.Status"<<endl<<"2.Hungry "<<endl<<"3.Thinking "<<endl<<"4.Exit "<<endl;
+cout<<"-------------------------------------------------------"<<endl;
+cout<<" => ";
+cin>>ch;
+switch (ch)
+{
+case 1: status(semaphore,philo,state);
+        break;
+case 2: cout<<"Enter the philospher:\n";
+        cin>>n;
+        hungry(n,semaphore,philo,state);
+        break;
+case 3: cout<<"Enter the philospher:\n";
+        cin>>n;
+        thinking(n,semaphore,philo,state);
+        break;
+case 4: cout<<" Good bye \n Have a nice day\n";
+        return 0;
+}
+}
+}
+========================================================================================================================================================================
+output:
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 2
+Enter the philospher:
+1
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 2
+Enter the philospher:
+0
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 2
+Enter the philospher:
+2
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 1
+philosopher postion 0   Sempaphore of philosopher: 0    State of philospher H
+philosopher postion 1   Sempaphore of philosopher: 1    State of philospher E
+philosopher postion 2   Sempaphore of philosopher: 0    State of philospher H
+philosopher postion 3   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 4   Sempaphore of philosopher: 0    State of philospher T
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 3
+Enter the philospher:
+1
+
+
+philospher was intially in a eating  state we moved him to thinking state
+
+
+
+
+Philospher of position 0&&2 they were in a hungry state so we have moved them in to Eating state
+
+
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 1
+philosopher postion 0   Sempaphore of philosopher: 1    State of philospher E
+philosopher postion 1   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 2   Sempaphore of philosopher: 1    State of philospher E
+philosopher postion 3   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 4   Sempaphore of philosopher: 0    State of philospher T
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 3
+Enter the philospher:
+2
+
+
+philospher was intially in a eating  state we moved him to thinking state
+
+
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 1
+philosopher postion 0   Sempaphore of philosopher: 1    State of philospher E
+philosopher postion 1   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 2   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 3   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 4   Sempaphore of philosopher: 0    State of philospher T
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 3
+Enter the philospher:
+0
+
+
+philospher was intially in a eating  state we moved him to thinking state
+
+
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 1
+philosopher postion 0   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 1   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 2   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 3   Sempaphore of philosopher: 0    State of philospher T
+philosopher postion 4   Sempaphore of philosopher: 0    State of philospher T
+-----------------------Menu----------------------------
+1.Status
+2.Hungry
+3.Thinking
+4.Exit
+-------------------------------------------------------
+ => 4
+ Good bye
+ Have a nice day
